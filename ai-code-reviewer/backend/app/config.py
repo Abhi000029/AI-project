@@ -7,6 +7,7 @@ class Settings(BaseSettings):
 
     anthropic_api_key: str = ""
     anthropic_model: str = "claude-3-5-sonnet-20241022"
+    use_mock_fallback: bool = True
 
     cors_origins: str = "http://localhost:5173"
     env: str = "development"
