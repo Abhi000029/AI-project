@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: ai-reviewer-mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: ai-reviewer-backend
+    ports:
+      - '8000:8000'
+    environment:
+      MONGODB_URI: mongodb://mongo:27017
+      MONGODB_DB_NAME: ai_code_reviewer
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODEL: claude-sonnet-5
+      CORS_ORIGINS: http://localhost:5173
+      ENV: production
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: ai-reviewer-frontend
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
