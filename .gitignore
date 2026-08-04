@@ -1,0 +1,16 @@
+# Ignore a specific folder (like dependencies)
+node_modules/
+vendor/
+
+# Ignore environment variables / secrets
+.env
+config/secrets.json
+
+# Ignore all files ending with a specific extension
+*.log
+*.tmp
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
